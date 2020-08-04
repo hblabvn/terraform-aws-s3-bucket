@@ -16,6 +16,12 @@ resource "aws_s3_bucket" "this" {
     permissions = ["FULL_CONTROL"]
   }
 
+  grant {
+    id          = var.canonicalUserId
+    type        = "CanonicalUser"
+    permissions = var.acl_permissions
+  }
+
   dynamic "website" {
     for_each = length(keys(var.website)) == 0 ? [] : [var.website]
 

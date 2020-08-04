@@ -117,3 +117,15 @@ variable "object_lock_configuration" {
   type        = any
   default     = {}
 }
+
+variable "canonicalUserId" {
+  description = "Canonical user id to grant for"
+  type        = string
+  default     = null
+}
+
+variable "acl_permissions" {
+  description = "List of permissions to apply for grantee. Valid values are READ, WRITE, READ_ACP, WRITE_ACP, FULL_CONTROL"
+  type        = list(string)
+  default     = []
+}
