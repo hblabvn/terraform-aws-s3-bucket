@@ -1,3 +1,5 @@
+data "aws_canonical_user_id" "current_user" {}
+
 resource "aws_s3_bucket" "this" {
   count = var.create_bucket ? 1 : 0
 
@@ -9,6 +11,11 @@ resource "aws_s3_bucket" "this" {
   acceleration_status = var.acceleration_status
   region              = var.region
   request_payer       = var.request_payer
+  grant {
+    id          = data.aws_canonical_user_id.current_user.id
+    type        = "CanonicalUser"
+    permissions = ["FULL_CONTROL"]
+  }
 
   dynamic "website" {
     for_each = length(keys(var.website)) == 0 ? [] : [var.website]
